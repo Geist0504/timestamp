@@ -26,11 +26,21 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api/timestamp/:date_string?", (req, res) => {
   let date = req.params.date_string
-  date ? 
-  let dateArr = date.split('-')
+  let dateArr = []
+  date ?  dateArr = date.split('-') : null
   let valid = true
-  dateArr[1] > 12 | dateArr[1] < 1 ? valid = false : valid = true
-  dateArr[2] > 31 | dateArr[2] < 1 ? valid = false : valid = true
+  let convertDate = Date.parse(date.match(/[a-zA-Z]+|[0-9]+/g).join(" "));
+  if (!isNaN(date)) { // check if user put in a number (unix time)
+       // format unix time to text
+    } else if (!isNaN(convertDate)) { 
+ // assumes user passes in a date (e.g. 12jan2015)
+    }
+
+  //Test for valid date length
+  dateArr.length != 3 ? valid = false : null
+  //Valid Month and Date?
+  dateArr[1] > 12 | dateArr[1] < 1 ? valid = false : null
+  dateArr[2] > 31 | dateArr[2] < 1 ? valid = false : null
   !date ? date = new Date() : date = new Date(req.params.date_string)
   console.log(date)
   let dateObj ={}
