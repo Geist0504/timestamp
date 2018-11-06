@@ -27,16 +27,19 @@ app.get("/api/hello", function (req, res) {
 app.get("/api/timestamp/:date_string?", (req, res) => {
   let date = req.params.date_string
   let dateArr = []
+  let valid = true
+  
   if(date){
-    dateArr = date.split('-'); date = new Date(date)
+    //Have to determine if UNIX string or ISO
+    dateArr = date.split('-')
+    date = new Date(date)
+    //Test for valid date length
+    dateArr.length != 3 ? valid = false : null
+    //Valid Month and Date?
+    dateArr[1] > 12 | dateArr[1] < 1 ? valid = false : null
+    dateArr[2] > 31 | dateArr[2] < 1 ? valid = false : null
   }
   else{date = new Date()}
-  let valid = true
-  //Test for valid date length
-  dateArr.length != 3 ? valid = false : null
-  //Valid Month and Date?
-  dateArr[1] > 12 | dateArr[1] < 1 ? valid = false : null
-  dateArr[2] > 31 | dateArr[2] < 1 ? valid = false : null
   console.log(date)
   let dateObj ={}
   valid ? dateObj = {"unix": date.getTime(), "utc":date.toUTCString()} : 
