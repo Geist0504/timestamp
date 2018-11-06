@@ -24,6 +24,13 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+app.get("/api/timestamp/:date_string?", (req, res) => {
+  let date = req.params.date_string
+  (!date) ? date = new Date() : date = new Date(req.params.date_string)
+  console.log(date)
+  res.json({greeting: req.params.date_string});
+});
+
 
 
 // listen for requests :)
