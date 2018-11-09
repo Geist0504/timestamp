@@ -31,13 +31,20 @@ app.get("/api/timestamp/:date_string?", (req, res) => {
   
   if(date){
     //Have to determine if UNIX string or ISO
-    dateArr = date.split('-')
-    date = new Date(date)
-    //Test for valid date length
-    dateArr.length != 3 ? valid = false : null
-    //Valid Month and Date?
-    dateArr[1] > 12 | dateArr[1] < 1 ? valid = false : null
-    dateArr[2] > 31 | dateArr[2] < 1 ? valid = false : null
+    if(!isNaN(date)){
+      date = new Date(date)
+    }
+    //Handle ISO format 8601
+    else{
+      dateArr = date.split('-')
+      //Test for valid date length
+      console.log(dateArr)
+      console.log(dateArr.length)
+      dateArr.length >= 3 & dateArr.lengeth <= 6 ? date = new Date(date) : valid = false
+      //Valid Month and Date?
+      dateArr[1] > 12 || dateArr[1] < 1 ? valid = false : null
+      dateArr[2] > 31 || dateArr[2] < 1 ? valid = false : null
+    }
   }
   else{date = new Date()}
   console.log(date)
