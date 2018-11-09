@@ -4,6 +4,7 @@
 // init project
 var express = require('express');
 var app = express();
+const moment = require('moment')
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
@@ -26,26 +27,20 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api/timestamp/:date_string?", (req, res) => {
   let date = req.params.date_string
-  let dateArr = []
   let valid = true
   
+  //Process if date is provided
   if(date){
-    //Have to determine if UNIX string or ISO
+    console.log(typeof(date))
+    console.log(isNaN(date))
+    //Process if to determine if UNIX string 
     if(!isNaN(date)){
       date = new Date(date)
     }
     //Handle ISO format 8601
     else{
-      dateArr = date.split('-')
-      //Test for valid date length
-      console.log(dateArr)
-      console.log(dateArr.length)
-      let lengthMet = (dateArr.length >= 3 && dateArr.length <= 6)
-      console.log(lengthMet)
-      lengthMet ? date = new Date(date) : valid = false
-      //Valid Month and Date?
-      dateArr[1] > 12 || dateArr[1] < 1 ? valid = false : null
-      dateArr[2] > 31 || dateArr[2] < 1 ? valid = false : null
+      let IsoTrue = moment(date, moment.ISO_8601, true).isValid()
+      IsoTrue ?  date = new Date(date) : valid = false
     }
   }
   else{date = new Date()}
