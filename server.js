@@ -31,11 +31,9 @@ app.get("/api/timestamp/:date_string?", (req, res) => {
   
   //Process if date is provided
   if(date){
-    console.log(typeof(date))
-    console.log(isNaN(date))
     //Process if to determine if UNIX string 
     if(!isNaN(date)){
-      date = new Date(date)
+      date = new Date(Number(date))
     }
     //Handle ISO format 8601
     else{
@@ -44,7 +42,6 @@ app.get("/api/timestamp/:date_string?", (req, res) => {
     }
   }
   else{date = new Date()}
-  console.log(date)
   let dateObj ={}
   valid ? dateObj = {"unix": date.getTime(), "utc":date.toUTCString()} : 
         dateObj = {"error": "Invalid Date"}
