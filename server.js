@@ -40,7 +40,9 @@ app.get("/api/timestamp/:date_string?", (req, res) => {
       //Test for valid date length
       console.log(dateArr)
       console.log(dateArr.length)
-      dateArr.length >= 3 & dateArr.lengeth <= 6 ? date = new Date(date) : valid = false
+      let lengthMet = (dateArr.length >= 3 && dateArr.length <= 6)
+      console.log(lengthMet)
+      lengthMet ? date = new Date(date) : valid = false
       //Valid Month and Date?
       dateArr[1] > 12 || dateArr[1] < 1 ? valid = false : null
       dateArr[2] > 31 || dateArr[2] < 1 ? valid = false : null
